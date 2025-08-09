@@ -138,7 +138,7 @@ export default function Index() {
                 <Label>מגדל</Label>
                 <div className="flex justify-end">
                   <Select defaultValue={residentForm.getValues("tower")} onValueChange={(v: "צפוני"|"דרומי")=>residentForm.setValue("tower", v, { shouldValidate:true })}>
-                    <SelectTrigger aria-label="בחירת מגדל">
+                    <SelectTrigger aria-label="בחירת מגדל" className="justify-end text-right rtl:text-right">
                       <SelectValue placeholder="בחר מגדל" />
                     </SelectTrigger>
                     <SelectContent>
@@ -175,7 +175,7 @@ export default function Index() {
           </form>
         )}
 
-        {step > 1 && (
+        {step > 1 && step < 4 && (
           <div className="flex items-center justify-between p-3 rounded-md bg-muted">
             <div className="text-sm">פרטי דייר נטענו מהמכשיר</div>
             <Button variant="link" onClick={() => setStep(1)} aria-label="עריכת פרטי דייר">עריכת פרטים</Button>
@@ -229,14 +229,14 @@ export default function Index() {
         {step === 4 && (
           <div className="grid grid-cols-1 gap-3">
             <Button
-              variant="ghost"
-              size="lg"
+              variant="cta"
+              size="xl"
               onClick={async () => { await navigator.clipboard.writeText(buildShareUrl()); toast({ title: "קישור הועתק" }); }}
               aria-label="העתק קישור"
             >
               העתק קישור הוראות
             </Button>
-            <Button asChild variant="link" aria-label="פתח דף קישור הוראות">
+            <Button asChild variant="secondary" size="xl" aria-label="פתח דף קישור הוראות">
               <a href={buildShareUrl()} target="_blank" rel="noreferrer">פתח דף קישור הוראות</a>
             </Button>
           </div>

@@ -33,11 +33,9 @@ export default function Instructions() {
   const isGuests = data.lotType === "guests";
 
   useMeta(
-    `הוראות חניה ל${isGuests ? "חניון אורחים" : "חניון ספקים"}`,
+    `הוראות חניה ל${isGuests ? "חניון אורחים" : "חניון ספקים"} – ${data.fullName}`,
     "הוראות חניה מפורטות עם ניווט ודגשים – מגדלי הצעירים"
   );
-
-  const intercomWord = isGuests ? "אורח" : "מוביל";
 
 
   if (!data.lotType) {
@@ -59,8 +57,8 @@ export default function Instructions() {
   return (
     <main className="min-h-screen container py-6">
       <header className="max-w-xl mx-auto mb-6">
-        <h1 className="text-3xl font-bold">
-          {`הוראות חניה ל${isGuests ? "חניון אורחים" : "חניון ספקים"}`}
+        <h1 className="text-4xl font-extrabold text-foreground">
+          {`הוראות חניה ל${isGuests ? "חניון אורחים" : "חניון ספקים"} – ${data.fullName}`}
         </h1>
         <p className="text-muted-foreground mt-1">
           לדירה: {data.tower} • קומה {data.floor} • דירה {data.unit}
@@ -78,7 +76,7 @@ export default function Instructions() {
                 <a href={WAZE_URL} target="_blank" rel="noreferrer">פתח Waze</a>
               </Button>
             </li>
-            <li>לשים לב להיכנס לחניון של "מגדלי הצעירים" (לא "מגדלי רסיטל").</li>
+            <li>לשים לב להיכנס לחניון של "מגדלי הצעירים" (לא "מגדלי רסיטל"). (בעתיד – אפשרות להוסיף תמונה)</li>
             {isGuests ? (
               <>
                 <li>יש לרדת למטה אל חניון האורחים. השער אמור להיפתח אוטומטית.</li>
@@ -86,10 +84,13 @@ export default function Instructions() {
                   לחנות ב: <strong>קומה {data.parkingFloor}</strong>, <strong>מספר חניה {data.parkingSpot}</strong>.
                 </li>
                 <li>
-                  לאחר החניה: ללכת למעלית של המגדל <strong>{data.tower}</strong> → לעלות ל־<strong>{data.floor}</strong> → להגיע ל־<strong>{data.unit}</strong>.
+                  לאחר החניה: ללכת למעלית של המגדל <strong>{data.tower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
                 </li>
                 <li>
-                  אם דלת הכניסה נעולה: להתקשר באינטרקום לשומר ולומר: "אורח שמגיע ל{data.fullName} ב{data.unit}".
+                  אם דלת הכניסה נעולה:
+                  <div className="mt-1 whitespace-pre-line">
+                    {`אני אורח שמגיע ל${data.fullName}\nשגר בדירה מספר ${data.unit}`}
+                  </div>
                 </li>
               </>
             ) : (
@@ -97,47 +98,33 @@ export default function Instructions() {
                 <li>בצד שמאל יש שער של חניון ספקים (שני עמודים; כתוב "חניון גן ילדים").</li>
                 <li className="space-y-2">
                   <div>אם השער לא נפתח:</div>
-                  <div className="flex gap-2 flex-wrap">
+                  <div>
                     <Button asChild variant="secondary" size="sm" aria-label="חיוג לפקיד הלובי">
                       <a href={`tel:${FRONT_DESK_PHONE}`}>חיוג ללובי: {FRONT_DESK_PHONE}</a>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      aria-label="שליחת הודעת WhatsApp"
-                      onClick={() =>
-                        window.open(
-                          `https://wa.me/?text=${encodeURIComponent(
-                            `מוביל שמגיע ל${data.fullName} שנמצא ב${data.floor} ${data.unit}`
-                          )}`,
-                          "_blank"
-                        )
-                      }
-                    >
-                      שלח הודעת WhatsApp
                     </Button>
                   </div>
                 </li>
                 <li>
-                  לאחר החניה: ללכת למעלית של המגדל <strong>{data.tower}</strong> → לעלות ל־<strong>{data.floor}</strong> → להגיע ל־<strong>{data.unit}</strong>.
+                  לאחר החניה: ללכת למעלית של המגדל <strong>{data.tower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
                 </li>
                 <li>
-                  אם דלת הכניסה נעולה: להתקשר באינטרקום לשומר ולומר: "מוביל שמגיע ל{data.fullName} ב{data.unit}".
+                  אם דלת הכניסה נעולה:
+                  <div className="mt-1 whitespace-pre-line">
+                    {`אני מוביל שמגיע ל${data.fullName}\nשגר בדירה מספר ${data.unit}`}
+                  </div>
                 </li>
               </>
             )}
           </ol>
 
-          <aside className="text-sm text-muted-foreground">
-            מידע נוסף לאורח: הטלפון שלי: {data.phone}
+          <aside className="text-sm text-muted-foreground space-y-2">
+            <p>אם אתה מסתבך במשהו, אני זמין בטלפון {data.phone}</p>
+            <Button asChild variant="secondary" size="sm" aria-label={`חייג ל${data.fullName}`}>
+              <a href={`tel:${data.phone}`}>חייג ל{data.fullName}</a>
+            </Button>
           </aside>
         </article>
 
-        <footer className="pt-4">
-          <Button asChild variant="link">
-            <Link to="/" aria-label="חזרה לויזארד">חזרה לויזארד</Link>
-          </Button>
-        </footer>
       </section>
     </main>
   );
