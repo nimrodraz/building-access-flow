@@ -136,7 +136,7 @@ export default function Index() {
               </div>
               <div className="grid gap-2">
                 <Label>מגדל</Label>
-                <div>
+                <div className="flex justify-end">
                   <Select defaultValue={residentForm.getValues("tower")} onValueChange={(v: "צפוני"|"דרומי")=>residentForm.setValue("tower", v, { shouldValidate:true })}>
                     <SelectTrigger aria-label="בחירת מגדל">
                       <SelectValue placeholder="בחר מגדל" />
@@ -227,40 +227,22 @@ export default function Index() {
         )}
 
         {step === 4 && (
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold">שיתוף והוראות</h2>
-            <div className="grid grid-cols-1 gap-3">
-              <Button variant="cta" size="xl" onClick={() => window.open(WAZE_URL, "_blank") } aria-label="פתח ניווט ב-Waze">פתח Waze לחניון</Button>
-              <Button variant="secondary" size="xl" asChild aria-label="התקשר ללובי">
-                <a href={`tel:${FRONT_DESK_PHONE}`}>חיוג ללובי: {FRONT_DESK_PHONE}</a>
-              </Button>
-              <Button
-                variant="outline"
-                size="xl"
-                aria-label="שלח הודעת WhatsApp"
-                onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`, "_blank")}
-              >
-                שלח ב-WhatsApp
-              </Button>
-              <Button
-                variant="ghost"
-                size="lg"
-                onClick={async () => { await navigator.clipboard.writeText(buildShareUrl()); toast({ title: "קישור הועתק" }); }}
-                aria-label="העתק קישור"
-              >
-                העתק קישור הוראות
-              </Button>
-              <Button asChild variant="link" aria-label="צפה בדף ההוראות">
-                <a href={buildShareUrl()} target="_blank" rel="noreferrer">פתח דף הוראות</a>
-              </Button>
-            </div>
+          <div className="grid grid-cols-1 gap-3">
+            <Button
+              variant="ghost"
+              size="lg"
+              onClick={async () => { await navigator.clipboard.writeText(buildShareUrl()); toast({ title: "קישור הועתק" }); }}
+              aria-label="העתק קישור"
+            >
+              העתק קישור הוראות
+            </Button>
+            <Button asChild variant="link" aria-label="פתח דף קישור הוראות">
+              <a href={buildShareUrl()} target="_blank" rel="noreferrer">פתח דף קישור הוראות</a>
+            </Button>
           </div>
         )}
       </section>
 
-      <footer className="mt-10 text-center text-xs text-muted-foreground">
-        בנוי למובייל, RTL, עם שמירה מקומית. ניתן להוסיף מדיה בהמשך.
-      </footer>
     </main>
   );
 }
