@@ -228,6 +228,9 @@ export default function Index() {
 
         {step === 4 && (
           <div className="grid grid-cols-1 gap-3">
+            <Button asChild variant="secondary" size="xl" aria-label="שלח הוראות ב-WhatsApp">
+              <a href={`https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" rel="noreferrer">שלח הוראות לאורח ב-WhatsApp</a>
+            </Button>
             <Button
               variant="cta"
               size="xl"

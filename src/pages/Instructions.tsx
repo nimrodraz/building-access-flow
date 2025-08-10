@@ -33,7 +33,7 @@ export default function Instructions() {
   const isGuests = data.lotType === "guests";
 
   useMeta(
-    `הוראות חניה ל${isGuests ? "חניון אורחים" : "חניון ספקים"} – ${data.fullName}`,
+    `הוראות חניה ל${isGuests ? "חניון אורחים" : "חניון ספקים"} – מגדלי הצעירים`,
     "הוראות חניה מפורטות עם ניווט ודגשים – מגדלי הצעירים"
   );
 
@@ -55,20 +55,20 @@ export default function Instructions() {
   }
 
   return (
-    <main className="min-h-screen container py-6">
+    <main className="min-h-screen container py-6 text-lg">
       <header className="max-w-xl mx-auto mb-6">
-        <h1 className="text-4xl font-extrabold text-foreground">
-          {`הוראות חניה ל${isGuests ? "חניון אורחים" : "חניון ספקים"} – ${data.fullName}`}
+        <h1 className="text-5xl font-extrabold text-foreground">
+          {`הוראות חניה ל${isGuests ? "חניון אורחים" : "חניון ספקים"}`}
         </h1>
         <p className="text-muted-foreground mt-1">
-          לדירה: {data.tower} • קומה {data.floor} • דירה {data.unit}
+          {data.fullName} • {data.tower} • קומה {data.floor} • דירה {data.unit}
         </p>
       </header>
 
       <section className="max-w-xl mx-auto space-y-6">
 
         <article className="space-y-4">
-          <h2 className="text-xl font-semibold">שלבים</h2>
+          <h2 className="text-2xl font-semibold">שלבים</h2>
           <ol className="list-decimal pr-5 space-y-2">
             <li className="space-y-2">
               <div>לשים בוויז "חניון מגדלי הצעירים".</div>
@@ -76,7 +76,10 @@ export default function Instructions() {
                 <a href={WAZE_URL} target="_blank" rel="noreferrer">פתח Waze</a>
               </Button>
             </li>
-            <li>לשים לב להיכנס לחניון של "מגדלי הצעירים" (לא "מגדלי רסיטל"). (בעתיד – אפשרות להוסיף תמונה)</li>
+            <li className="space-y-2">
+              לשים לב להיכנס לחניון של "מגדלי הצעירים" (לא "מגדלי רסיטל").
+              <img src="/placeholder.svg" alt="המחשה: כניסה לחניון מגדלי הצעירים" loading="lazy" className="rounded-md border mt-2 w-full max-w-sm" />
+            </li>
             {isGuests ? (
               <>
                 <li>יש לרדת למטה אל חניון האורחים. השער אמור להיפתח אוטומטית.</li>
@@ -87,7 +90,7 @@ export default function Instructions() {
                   לאחר החניה: ללכת למעלית של המגדל <strong>{data.tower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
                 </li>
                 <li>
-                  אם דלת הכניסה נעולה:
+                  אם דלת הכניסה נעולה, יש לצלצל באינטרקום ללובי ולהגיד:
                   <div className="mt-1 whitespace-pre-line">
                     {`אני אורח שמגיע ל${data.fullName}\nשגר בדירה מספר ${data.unit}`}
                   </div>
@@ -108,7 +111,7 @@ export default function Instructions() {
                   לאחר החניה: ללכת למעלית של המגדל <strong>{data.tower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
                 </li>
                 <li>
-                  אם דלת הכניסה נעולה:
+                  אם דלת הכניסה נעולה, יש לצלצל באינטרקום ללובי ולהגיד:
                   <div className="mt-1 whitespace-pre-line">
                     {`אני מוביל שמגיע ל${data.fullName}\nשגר בדירה מספר ${data.unit}`}
                   </div>
@@ -117,7 +120,7 @@ export default function Instructions() {
             )}
           </ol>
 
-          <aside className="text-sm text-muted-foreground space-y-2">
+          <aside className="text-muted-foreground space-y-2">
             <p>אם אתה מסתבך במשהו, אני זמין בטלפון {data.phone}</p>
             <Button asChild variant="secondary" size="sm" aria-label={`חייג ל${data.fullName}`}>
               <a href={`tel:${data.phone}`}>חייג ל{data.fullName}</a>
