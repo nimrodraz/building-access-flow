@@ -50,7 +50,7 @@ export default function Index() {
 
   const guestForm = useForm<GuestParking>({
     resolver: zodResolver(guestParkingSchema),
-    defaultValues: { parkingFloor: "-1", parkingSpot: "" },
+    defaultValues: { parkingFloor: "-4", parkingSpot: "" },
     mode: "onChange",
   });
 
@@ -97,13 +97,8 @@ export default function Index() {
   };
 
   const whatsappMessage = useMemo(() => {
-    const r = residentForm.getValues();
-    if (parkingType === "guests") {
-      const g = guestForm.getValues();
-      return `היי! הנה הוראות הגעה לחניון האורחים במגדלי הצעירים. החנה בקומה ${g.parkingFloor} במקום ${g.parkingSpot}. עלה ל${r.tower} קומה ${r.floor}, דירה ${r.unit}. ${buildShareUrl()}`;
-    }
-    return `היי! הגעה דרך שער שמאל (חניון גן ילדים) למוביל/ספק. עלה ל${r.tower} קומה ${r.floor}, דירה ${r.unit}. ${buildShareUrl()}`;
-  }, [residentForm, guestForm, parkingType]);
+    return "הוראות חניה למגדל הצעירים";
+  }, []);
 
   return (
     <main className="min-h-screen container py-6">
