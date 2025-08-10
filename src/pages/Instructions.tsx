@@ -32,6 +32,9 @@ export default function Instructions() {
 
   const isGuests = data.lotType === "guests";
 
+  const floorLabel = (f: string) => (f?.startsWith("-") ? `מינוס ${f.slice(1)}` : f);
+
+
   useMeta(
     `הוראות חניה ל${isGuests ? "חניון אורחים" : "חניון ספקים"} – מגדלי הצעירים`,
     "הוראות חניה מפורטות עם ניווט ודגשים – מגדלי הצעירים"
@@ -78,13 +81,13 @@ export default function Instructions() {
             </li>
             <li className="space-y-2">
               לשים לב להיכנס לחניון של "מגדלי הצעירים" (לא "מגדלי רסיטל").
-              <img src="/placeholder.svg" alt="המחשה: כניסה לחניון מגדלי הצעירים" loading="lazy" className="rounded-md border mt-2 w-full max-w-sm" />
+              <img src="/lovable-uploads/d64a5e06-972e-47f1-880b-4f2111179dca.png" alt="המחשה: כניסה לחניון מגדלי הצעירים" loading="lazy" className="rounded-md border mt-2 w-full max-w-sm" />
             </li>
             {isGuests ? (
               <>
                 <li>יש לרדת למטה אל חניון האורחים. השער אמור להיפתח אוטומטית.</li>
                 <li>
-                  לחנות ב: <strong>קומה {data.parkingFloor}</strong>, <strong>מספר חניה {data.parkingSpot}</strong>.
+                  לחנות ב: <strong>קומה {floorLabel(data.parkingFloor)}</strong>, <strong>מספר חניה {data.parkingSpot}</strong>.
                 </li>
                 <li>
                   לאחר החניה: ללכת למעלית של המגדל <strong>{data.tower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
@@ -98,7 +101,10 @@ export default function Instructions() {
               </>
             ) : (
               <>
-                <li>בצד שמאל יש שער של חניון ספקים (שני עמודים; כתוב "חניון גן ילדים").</li>
+                <li className="space-y-2">
+                  בצד שמאל יש שער של חניון ספקים (שני עמודים; כתוב "חניון גן ילדים").
+                  <img src="/lovable-uploads/29aa8bd5-20f1-4455-a66d-2fc91feab4b7.png" alt="המחשה: שער חניון ספקים - חניון גן ילדים" loading="lazy" className="rounded-md border mt-2 w-full max-w-sm" />
+                </li>
                 <li className="space-y-2">
                   <div>אם השער לא נפתח:</div>
                   <div>
@@ -121,7 +127,7 @@ export default function Instructions() {
           </ol>
 
           <aside className="text-muted-foreground space-y-2">
-            <p>אם אתה מסתבך במשהו, אני זמין בטלפון {data.phone}</p>
+            <p>במידת הצורך, ניתן להתקשר לדייר/ת שהזמין אותך</p>
             <Button asChild variant="secondary" size="sm" aria-label={`חייג ל${data.fullName}`}>
               <a href={`tel:${data.phone}`}>חייג ל{data.fullName}</a>
             </Button>
