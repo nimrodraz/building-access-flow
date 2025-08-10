@@ -42,7 +42,7 @@ export default function Instructions() {
 
 
   if (!data.lotType) {
-    return (
+    return (  
       <main className="min-h-screen container py-8">
         <article className="max-w-xl mx-auto space-y-6">
           <h1 className="text-2xl font-bold">לא נמצאו נתוני הוראות</h1>
