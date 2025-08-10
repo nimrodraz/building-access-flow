@@ -97,14 +97,17 @@ export default function Index() {
   };
 
   const whatsappMessage = useMemo(() => {
-    return "הוראות חניה למגדל הצעירים";
-  }, []);
+    return `הוראות חניה למגדל הצעירים ${buildShareUrl()}`;
+  }, [residentForm, guestForm, parkingType]);
 
   return (
     <main className="min-h-screen container py-6">
       <header className="mb-6">
         <h1 className="text-3xl font-bold">הזמנת אורח/ספק</h1>
         <p className="text-muted-foreground">ממשק מהיר לשיתוף הוראות הגעה</p>
+        {step === 1 && (
+          <p className="text-sm text-muted-foreground mt-1">שים לב, יש לרשום פרטים אלו רק פעם אחת, ולאחר מכן פרטים אלו ישמור תצטרך להקליד אותם שוב</p>
+        )}
       </header>
 
       <section className="max-w-xl mx-auto space-y-6">
