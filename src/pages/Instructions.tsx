@@ -34,9 +34,12 @@ export default function Instructions() {
   const isPaid = data.lotType === "paid";
 
   const displayTower = useMemo(() => {
-    if (data.tower?.includes("צפוני")) return `${data.tower} (מגדל 1)`;
-    if (data.tower?.includes("דרומי")) return `${data.tower} (מגדל 2)`;
-    return data.tower;
+    const normalized = data.tower
+      ?.replace("צפוני", "הצפוני")
+      ?.replace("דרומי", "הדרומי");
+    if (normalized?.includes("הצפוני")) return `${normalized} (מגדל 1)`;
+    if (normalized?.includes("הדרומי")) return `${normalized} (מגדל 2)`;
+    return normalized ?? "";
   }, [data.tower]);
 
   const floorLabel = (f: string) => (f?.startsWith("-") ? `מינוס ${f.slice(1)}` : f);
@@ -71,7 +74,7 @@ export default function Instructions() {
           {`הוראות חניה ל${isGuests ? "חניון אורחים" : isPaid ? "חניון בתשלום" : "חניון ספקים"}`}
         </h1>
         <p className="text-muted-foreground mt-1">
-          {data.fullName} • {data.tower} • קומה {data.floor} • דירה {data.unit}
+          {data.fullName} • {displayTower} • קומה {data.floor} • דירה {data.unit}
         </p>
       </header>
 
@@ -100,7 +103,7 @@ export default function Instructions() {
                   לחנות ב: <strong>קומה {floorLabel(data.parkingFloor)}</strong>, <strong>מספר חניה {data.parkingSpot}</strong>.
                 </li>
                 <li>
-                  לאחר החניה: ללכת למעלית של המגדל <strong>{data.tower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
+                  לאחר החניה: ללכת למעלית של המגדל <strong>{displayTower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
                 </li>
                 <li>
                   אם דלת הכניסה נעולה, יש לצלצל באינטרקום ללובי ולהגיד:
@@ -111,27 +114,50 @@ export default function Instructions() {
               </>
             ) : (
               <>
-                <li className="space-y-2">
-                  בצד שמאל יש שער של חניון ספקים (שני עמודים; כתוב "חניון גן ילדים").
-                  <img src="/lovable-uploads/29aa8bd5-20f1-4455-a66d-2fc91feab4b7.png" alt="המחשה: שער חניון ספקים - חניון גן ילדים" loading="lazy" className="rounded-md border mt-2 w-full max-w-sm" />
-                </li>
-                <li className="space-y-2">
-                  <div>אם השער לא נפתח:</div>
-                  <div>
-                    <Button asChild variant="secondary" size="sm" aria-label="חיוג לפקיד הלובי">
-                      <a href={`tel:${FRONT_DESK_PHONE}`}>חיוג ללובי: {FRONT_DESK_PHONE}</a>
-                    </Button>
-                  </div>
-                </li>
-                <li>
-                  לאחר החניה: ללכת למעלית של המגדל <strong>{data.tower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
-                </li>
-                <li>
-                  אם דלת הכניסה נעולה, יש לצלצל באינטרקום ללובי ולהגיד:
-                  <div className="mt-1 whitespace-pre-line">
-                    {`אני מוביל שמגיע ל${data.fullName}\nשגר בדירה מספר ${data.unit}`}
-                  </div>
-                </li>
+                {isPaid ? (
+                  <>
+                    <li className="space-y-2">
+                      יורדים קצת למטה ובצד שמאל יש להיכנס לחניון בתשלום
+                      <div className="mt-2 grid grid-cols-2 gap-3 max-w-xl">
+                        <img src="/lovable-uploads/0556cf97-d774-4945-a14c-1bd5c42861b2.png" alt="כניסה לחניון בתשלום – מגדלי הצעירים" loading="lazy" className="rounded-md border w-full h-auto" />
+                        <img src="/lovable-uploads/dc565e93-67aa-4f08-9022-0b068a028bce.png" alt="שילוט מחירים בחניון בתשלום – מגדלי הצעירים" loading="lazy" className="rounded-md border w-full h-auto" />
+                      </div>
+                    </li>
+                    <li>
+                      לאחר החניה: ללכת למעלית של המגדל <strong>{displayTower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
+                    </li>
+                    <li>
+                      אם דלת הכניסה נעולה, יש לצלצל באינטרקום ללובי ולהגיד:
+                      <div className="mt-1 whitespace-pre-line">
+                        {`אני מוביל שמגיע ל${data.fullName}\nשגר בדירה מספר ${data.unit}`}
+                      </div>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="space-y-2">
+                      בצד שמאל יש שער של חניון ספקים (שני עמודים; כתוב "חניון גן ילדים").
+                      <img src="/lovable-uploads/29aa8bd5-20f1-4455-a66d-2fc91feab4b7.png" alt="המחשה: שער חניון ספקים - חניון גן ילדים" loading="lazy" className="rounded-md border mt-2 w-full max-w-sm" />
+                    </li>
+                    <li className="space-y-2">
+                      <div>אם השער לא נפתח:</div>
+                      <div>
+                        <Button asChild variant="secondary" size="sm" aria-label="חיוג לפקיד הלובי">
+                          <a href={`tel:${FRONT_DESK_PHONE}`}>חיוג ללובי: {FRONT_DESK_PHONE}</a>
+                        </Button>
+                      </div>
+                    </li>
+                    <li>
+                      לאחר החניה: ללכת למעלית של המגדל <strong>{displayTower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
+                    </li>
+                    <li>
+                      אם דלת הכניסה נעולה, יש לצלצל באינטרקום ללובי ולהגיד:
+                      <div className="mt-1 whitespace-pre-line">
+                        {`אני מוביל שמגיע ל${data.fullName}\nשגר בדירה מספר ${data.unit}`}
+                      </div>
+                    </li>
+                  </>
+                )}
               </>
             )}
           </ol>
