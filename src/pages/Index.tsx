@@ -96,13 +96,14 @@ export default function Index() {
     return `${window.location.origin}/instructions?${params.toString()}`;
   };
 
+  const parkingSpotWatch = guestForm.watch("parkingSpot");
+  const parkingFloorWatch = guestForm.watch("parkingFloor");
   const whatsappMessage = useMemo(() => {
-    const g = guestForm.getValues();
-    const details = parkingType === "guests" && g.parkingSpot
-      ? ` | מס׳ חניה ${g.parkingSpot} בקומה ${g.parkingFloor}`
+    const details = parkingType === "guests" && parkingSpotWatch
+      ? ` | מס׳ חניה ${parkingSpotWatch} בקומה ${parkingFloorWatch}`
       : "";
     return `הוראות חניה למגדל הצעירים${details} ${buildShareUrl()}`;
-  }, [residentForm, guestForm, parkingType]);
+  }, [parkingType, parkingSpotWatch, parkingFloorWatch]);
 
   return (
     <main className="min-h-screen container py-6">
@@ -192,8 +193,8 @@ export default function Index() {
             <p className="text-muted-foreground">בחר לאיזה חניה אתה רוצה להזמין את האורח שלך</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <Button variant="cta" size="xl" aria-label="חניון ספקים" onClick={() => { setParkingType("suppliers"); setStep(4); }}>חניון ספקים</Button>
-              <Button variant="secondary" size="xl" aria-label="חניון דיירים" onClick={() => { setParkingType("guests"); setStep(3); }}>חניון דיירים</Button>
-              <Button variant="secondary" size="xl" aria-label="חניון בתשלום" onClick={() => { setParkingType("paid"); setStep(4); }}>חניון בתשלום</Button>
+              <Button variant="cta" size="xl" aria-label="חניון דיירים" onClick={() => { setParkingType("guests"); setStep(3); }}>חניון דיירים</Button>
+              <Button variant="cta" size="xl" aria-label="חניון בתשלום" onClick={() => { setParkingType("paid"); setStep(4); }}>חניון בתשלום</Button>
             </div>
           </div>
         )}
