@@ -21,7 +21,7 @@ type Resident = {
   unit: string;
 };
 
-type ParkingType = "suppliers" | "guests";
+type ParkingType = "suppliers" | "guests" | "paid";
 
 const residentSchema = z.object({
   fullName: z.string().min(2, "שדה חובה"),
@@ -33,7 +33,7 @@ const residentSchema = z.object({
 
 const guestParkingSchema = z.object({
   parkingFloor: z.enum(FLOORS),
-  parkingSpot: z.string().regex(/^\d{1,2}$/,{ message: "מספר בין 1 ל-99" }),
+  parkingSpot: z.string().regex(/^\d{1,3}$/,{ message: "מספר בין 1 ל-999" }),
 });
 
 type GuestParking = z.infer<typeof guestParkingSchema>;
@@ -97,7 +97,11 @@ export default function Index() {
   };
 
   const whatsappMessage = useMemo(() => {
-    return `הוראות חניה למגדל הצעירים ${buildShareUrl()}`;
+    const g = guestForm.getValues();
+    const details = parkingType === "guests" && g.parkingSpot
+      ? ` | מס׳ חניה ${g.parkingSpot} בקומה ${g.parkingFloor}`
+      : "";
+    return `הוראות חניה למגדל הצעירים${details} ${buildShareUrl()}`;
   }, [residentForm, guestForm, parkingType]);
 
   return (
@@ -105,9 +109,11 @@ export default function Index() {
       <header className="mb-6">
         <h1 className="text-3xl font-bold">הזמנת אורח/ספק</h1>
         <p className="text-muted-foreground">ממשק מהיר לשיתוף הוראות הגעה</p>
-        {step === 1 && (
-          <p className="text-sm text-muted-foreground mt-1">שים לב, יש לרשום פרטים אלו רק פעם אחת, ולאחר מכן פרטים אלו ישמור תצטרך להקליד אותם שוב</p>
-        )}
+          {step === 1 && (
+            <div className="text-sm text-muted-foreground mt-1 whitespace-pre-line">{`דייר יקר,
+ .במערכת זו תוכל ליצור במהירות הוראות חניה לאורח שלך ולשלוח לו אותן!
+לגבי מסך זה: יש להזין את הפרטים הללו פעם אחת בלבד. לאחר מכן הם יישמרו במערכת, ולא תצטרך להקליד אותם שוב.`}</div>
+          )}
       </header>
 
       <section className="max-w-xl mx-auto space-y-6">
@@ -183,9 +189,11 @@ export default function Index() {
         {step === 2 && (
           <div className="space-y-3">
             <h2 className="text-xl font-semibold">בחר סוג חניה</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <p className="text-muted-foreground">בחר לאיזה חניה אתה רוצה להזמין את האורח שלך</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <Button variant="cta" size="xl" aria-label="חניון ספקים" onClick={() => { setParkingType("suppliers"); setStep(4); }}>חניון ספקים</Button>
-              <Button variant="secondary" size="xl" aria-label="חניון אורחים" onClick={() => { setParkingType("guests"); setStep(3); }}>חניון אורחים</Button>
+              <Button variant="secondary" size="xl" aria-label="חניון דיירים" onClick={() => { setParkingType("guests"); setStep(3); }}>חניון דיירים</Button>
+              <Button variant="secondary" size="xl" aria-label="חניון בתשלום" onClick={() => { setParkingType("paid"); setStep(4); }}>חניון בתשלום</Button>
             </div>
           </div>
         )}
@@ -209,7 +217,7 @@ export default function Index() {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="parkingSpot">מס׳ חניה</Label>
-                <Input id="parkingSpot" inputMode="numeric" {...guestForm.register("parkingSpot", { required: true })} aria-label="מספר חניה" />
+                <Input id="parkingSpot" inputMode="numeric" maxLength={3} {...guestForm.register("parkingSpot", { required: true })} aria-label="מספר חניה" />
                 {guestForm.formState.errors.parkingSpot && (
                   <span className="text-destructive text-sm">
                     {guestForm.formState.errors.parkingSpot.message || "שדה חובה"}
@@ -226,6 +234,7 @@ export default function Index() {
 
         {step === 4 && (
           <div className="grid grid-cols-1 gap-3">
+            <p className="text-muted-foreground">הוראות החניה מוכנות, עכשיו רק צריך לשלוח אותן לאורח שלך!</p>
             <Button asChild variant="secondary" size="xl" aria-label="שלח הוראות ב-WhatsApp">
               <a href={`https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" rel="noreferrer">שלח הוראות לאורח ב-WhatsApp</a>
             </Button>

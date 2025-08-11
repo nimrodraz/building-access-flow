@@ -17,7 +17,7 @@ export default function Instructions() {
 
   const [params] = useSearchParams();
   const data = useMemo(() => {
-    const lotType = params.get("lotType") as "suppliers" | "guests" | null;
+    const lotType = params.get("lotType") as "suppliers" | "guests" | "paid" | null;
     return {
       lotType,
       fullName: params.get("fullName") ?? "",
@@ -31,12 +31,19 @@ export default function Instructions() {
   }, [params]);
 
   const isGuests = data.lotType === "guests";
+  const isPaid = data.lotType === "paid";
+
+  const displayTower = useMemo(() => {
+    if (data.tower?.includes("צפוני")) return `${data.tower} (מגדל 1)`;
+    if (data.tower?.includes("דרומי")) return `${data.tower} (מגדל 2)`;
+    return data.tower;
+  }, [data.tower]);
 
   const floorLabel = (f: string) => (f?.startsWith("-") ? `מינוס ${f.slice(1)}` : f);
 
 
   useMeta(
-    `הוראות חניה ל${isGuests ? "חניון אורחים" : "חניון ספקים"} – מגדלי הצעירים`,
+    `הוראות חניה ל${isGuests ? "חניון אורחים" : isPaid ? "חניון בתשלום" : "חניון ספקים"} – מגדלי הצעירים`,
     "הוראות חניה מפורטות עם ניווט ודגשים – מגדלי הצעירים"
   );
 
@@ -61,7 +68,7 @@ export default function Instructions() {
     <main className="min-h-screen container py-6 text-lg">
       <header className="max-w-xl mx-auto mb-6">
         <h1 className="text-5xl font-extrabold text-foreground">
-          {`הוראות חניה ל${isGuests ? "חניון אורחים" : "חניון ספקים"}`}
+          {`הוראות חניה ל${isGuests ? "חניון אורחים" : isPaid ? "חניון בתשלום" : "חניון ספקים"}`}
         </h1>
         <p className="text-muted-foreground mt-1">
           {data.fullName} • {data.tower} • קומה {data.floor} • דירה {data.unit}
