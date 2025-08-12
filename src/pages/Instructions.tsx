@@ -37,8 +37,8 @@ export default function Instructions() {
     const normalized = data.tower
       ?.replace("צפוני", "הצפוני")
       ?.replace("דרומי", "הדרומי");
-    if (normalized?.includes("הצפוני")) return `${normalized} (מגדל 1)`;
-    if (normalized?.includes("הדרומי")) return `${normalized} (מגדל 2)`;
+    if (normalized?.includes("הדרומי")) return `${normalized} (מגדל 1)`;
+    if (normalized?.includes("הצפוני")) return `${normalized} (מגדל 2)`;
     return normalized ?? "";
   }, [data.tower]);
 
@@ -106,7 +106,7 @@ export default function Instructions() {
                   לאחר החניה: ללכת למעלית של המגדל <strong>{displayTower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
                 </li>
                 <li>
-                  אם דלת הכניסה נעולה, יש לצלצל באינטרקום ללובי ולהגיד:
+                  אם דלת הכניסה נעולה, יש לצלצל באינטרקום ולהגיד:
                   <div className="mt-1 whitespace-pre-line">
                     {`אני אורח שמגיע ל${data.fullName}\nשגר בדירה מספר ${data.unit}`}
                   </div>
@@ -127,9 +127,9 @@ export default function Instructions() {
                       לאחר החניה: ללכת למעלית של המגדל <strong>{displayTower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
                     </li>
                     <li>
-                      אם דלת הכניסה נעולה, יש לצלצל באינטרקום ללובי ולהגיד:
+                      אם דלת הכניסה נעולה, יש לצלצל באינטרקום ולהגיד:
                       <div className="mt-1 whitespace-pre-line">
-                        {`אני מוביל שמגיע ל${data.fullName}\nשגר בדירה מספר ${data.unit}`}
+                        {`אני אורח שמגיע ל${data.fullName}\nשגר בדירה מספר ${data.unit}`}
                       </div>
                     </li>
                   </>
@@ -151,7 +151,7 @@ export default function Instructions() {
                       לאחר החניה: ללכת למעלית של המגדל <strong>{displayTower}</strong>, לעלות לקומה <strong>{data.floor}</strong>, דירה <strong>{data.unit}</strong>.
                     </li>
                     <li>
-                      אם דלת הכניסה נעולה, יש לצלצל באינטרקום ללובי ולהגיד:
+                      אם דלת הכניסה נעולה, יש לצלצל באינטרקום ולהגיד:
                       <div className="mt-1 whitespace-pre-line">
                         {`אני מוביל שמגיע ל${data.fullName}\nשגר בדירה מספר ${data.unit}`}
                       </div>
