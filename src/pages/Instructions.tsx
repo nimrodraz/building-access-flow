@@ -95,7 +95,7 @@ export default function Instructions() {
                 <img src="/lovable-uploads/d64a5e06-972e-47f1-880b-4f2111179dca.png" alt="המחשה: כניסה לחניון מגדלי הצעירים" loading="lazy" className="rounded-md border w-full h-auto" />
                 <video
                   className="rounded-md border w-full h-auto"
-                  src="/lovable-uploads/parking-step2.mp4"
+                  src="/lovable-uploads/1.mp4"
                   autoPlay
                   muted
                   loop
