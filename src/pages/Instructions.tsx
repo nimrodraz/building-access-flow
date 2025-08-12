@@ -91,7 +91,20 @@ export default function Instructions() {
             </li>
             <li className="space-y-2">
               לשים לב להיכנס לחניון של "מגדלי הצעירים" (לא "מגדלי רסיטל").
-              <img src="/lovable-uploads/d64a5e06-972e-47f1-880b-4f2111179dca.png" alt="המחשה: כניסה לחניון מגדלי הצעירים" loading="lazy" className="rounded-md border mt-2 w-full max-w-sm" />
+              <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-3 max-w-3xl">
+                <img src="/lovable-uploads/d64a5e06-972e-47f1-880b-4f2111179dca.png" alt="המחשה: כניסה לחניון מגדלי הצעירים" loading="lazy" className="rounded-md border w-full h-auto" />
+                <video
+                  className="rounded-md border w-full h-auto"
+                  src="/lovable-uploads/parking-step2.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label="וידאו: כניסה נכונה לחניון מגדלי הצעירים"
+                  title="וידאו: כניסה לחניון מגדלי הצעירים"
+                />
+              </div>
             </li>
             {isGuests ? (
               <>
