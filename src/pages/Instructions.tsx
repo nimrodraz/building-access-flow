@@ -71,8 +71,13 @@ export default function Instructions() {
     <main className="min-h-screen container py-6 text-lg">
       <header className="max-w-xl mx-auto mb-6">
         <h1 className="text-5xl font-extrabold text-foreground">
-          {`הוראות חניה ל${isGuests ? "חניון אורחים" : isPaid ? "חניון בתשלום" : "חניון ספקים"}`}
+          {`הוראות חניה ל${isGuests ? "אורח" : isPaid ? "חניון בתשלום" : "חניון ספקים"}`}
         </h1>
+        {isGuests && (
+          <h2 className="text-xl font-semibold text-foreground mt-2">
+            הנך מוזמן לחניון הדיירים
+          </h2>
+        )}
         <p className="text-muted-foreground mt-1">
           {data.fullName} • {displayTower} • קומה {data.floor} • דירה {data.unit}
         </p>
