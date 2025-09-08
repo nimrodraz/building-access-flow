@@ -114,8 +114,8 @@ export default function Instructions() {
             {isGuests ? (
               <>
                 <li className="space-y-2">
-                  יש לרדת למטה אל חניון האורחים. השער אמור להיפתח אוטומטית.
-                  <img src="/lovable-uploads/83272b10-f8c4-4b44-8cc6-13387de27862.png" alt="המחשה: ירידה לחניון האורחים – מגדלי הצעירים" loading="lazy" className="rounded-md border mt-2 w-full max-w-sm" />
+                  יש לרדת למטה אל חניון הדיירים. השער אמור להיפתח אוטומטית.
+                  <img src="/lovable-uploads/83272b10-f8c4-4b44-8cc6-13387de27862.png" alt="המחשה: ירידה לחניון הדיירים – מגדלי הצעירים" loading="lazy" className="rounded-md border mt-2 w-full max-w-sm" />
                 </li>
                 <li>
                   לחנות ב: <strong>קומה {floorLabel(data.parkingFloor)}</strong>, <strong>מספר חניה {data.parkingSpot}</strong>.
